@@ -1,55 +1,83 @@
 ﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text;
 using System.Diagnostics;
-using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace WebTest.Tests.Test
 {
-
-    // test commit 2 mlml
-    // test commit 2 hghghg
-    [TestFixture]
+    [TestClass]
     public class InheritedTest
     {
-        [Test]
-        public void TestMethod1()
+        [TestMethod]
+        public void InheritedTestMethod()
         {
-            Overrider over = new Overrider();
-            BaseClass b1 = over;
-            over.Foo(); // Overrider.Foo
-            b1.Foo(); // Overrider.Foo
-            Hider h = new Hider();
-            BaseClass b2 = h;
-            h.Foo(); // Hider.Foo
-            b2.Foo(); // BaseClass.Foo
-            Console.WriteLine("qisudisqudsdq");
-            Trace.WriteLine("ererereerer");
-        }
-        [Test]
-        public void NunitTest()
-        {
+            StringBuilder sb = new StringBuilder();
 
+            A testa = new B { b = 2 }; 
+            sb.Append(testa.methodA()); // A 
+            sb.Append(testa.methodB()); // b
 
+            B testb = new B();
+            A test = (A)testb;
+            sb.Append(test.methodA()); // A
+            sb.Append(test.methodB()); // b
+
+            A testc = new C();
+            sb.Append(testc.methodA()); // A
+            sb.Append(testc.methodB()); // b
+
+            B testb2 = new C();
+            sb.Append(testb2.methodA()); // A
+            sb.Append(testb2.methodB()); // 2
+
+            Trace.WriteLine(sb.ToString()); //Ab Ab Ab A2
+            // AbAbAbA2
+            B toto = (B)testa;
 
         }
 
-        [Test]
-        public void TestDescription()
+        public class A
         {
-            //Assert.IsTrue(Program.Description.Length, Is.GreaterThan(0));
+            internal int a;
+
+            public virtual string methodA()
+            {
+                return "a";
+            }
+
+            public virtual string methodB()
+            {
+                return "b";
+            }
         }
 
-        public class BaseClass
+        public class B : A 
         {
-            public virtual void Foo() { Trace.WriteLine("BaseClass.Foo"); }
+            public int b;
+            public override string methodA()
+            {
+                return "A";
+            }
+
+           // le mot clé new masque explicitement un membre qui est hérité d'une classe de base
+            public new virtual string methodB()
+            {
+                return "B";
+            }
+
         }
-        public class Overrider : BaseClass
+
+        public class C : B
         {
-            public override void Foo() { Trace.WriteLine("Overrider.Foo"); }
-        }
-        public class Hider : BaseClass
-        {
-            public new void Foo() { Trace.WriteLine("Hider.Foo"); }
+            public new string methodA()
+            {
+                return "1";
+            }
+
+            public override string methodB()
+            {
+                return "2"; 
+            }
         }
     }
 }

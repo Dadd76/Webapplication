@@ -20,6 +20,8 @@ namespace WebApplication1.Controllers
 
             public IEnumerable<Product> GetAllProducts()
             {
+
+
                 return products;
             }
 
@@ -30,6 +32,9 @@ namespace WebApplication1.Controllers
                 {
                     return NotFound();
                 }
+                
+               
+
                 return Ok(product);
             }
         }

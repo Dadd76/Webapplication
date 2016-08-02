@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,14 +13,12 @@ namespace WebTest.Tests.Test
         public void SingletonTest()
         {
             Singleton MySingleton = Singleton.Instance;
-
             MySingleton = Singleton.Instance;
         }
-
     }
 
 
-        public sealed class Singleton
+    public sealed class Singleton
     {
         private static volatile Singleton instance;
         private static object syncRoot = new Object();
@@ -44,10 +41,6 @@ namespace WebTest.Tests.Test
                 return instance;
             }
         }
-
-
-
     }
-
 }
 
